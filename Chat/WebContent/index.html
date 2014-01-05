@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<style>
+.conversation {
+	width: 200px;
+}
+
+.message {
+	border: 1px solid;
+	border-radius: 15px;
+	word-wrap: break-word;
+	padding: 15px 15px;
+	margin-top: 15px;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	font-size: 0.75em;
+	line-height: 130%;
+}
+</style>
+<title>Chat</title>
+<script src="script/jquery.js" type="text/javascript"></script>
+<script>
+	$(document).ready(
+			function() {
+				$("#send").click(
+						function() {
+							//console.log("About to post.");
+							$.post("SendChat", {
+								text : $("#textInput").val()
+							}, function(data, status) {
+								/*alert("Data: " + data);*/
+								$("#conversation").prepend(
+										"<div class='message'>" + data
+												+ "</div>");
+							});
+							$("#textInput").val("");
+						});
+			});
+</script>
+</head>
+<body>
+	<input id="textInput" type="text"></input>
+	<button id="send">Send</button>
+	<div id="conversation" class="conversation"></div>
+</body>
+</html>

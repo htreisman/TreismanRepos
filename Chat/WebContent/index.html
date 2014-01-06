@@ -25,16 +25,20 @@
 			function() {
 				$("#send").click(
 						function() {
-							//console.log("About to post.");
-							$.post("SendChat", {
-								text : $("#textInput").val()
-							}, function(data, status) {
-								/*alert("Data: " + data);*/
-								$("#conversation").prepend(
-										"<div class='message'>" + data
-												+ "</div>");
-							});
-							$("#textInput").val("");
+							if ($("#textInput").val() != "") {
+								$.post("SendChat", {
+									text : $("#textInput").val(),
+									messageCount : $("#messageCount").val()
+								}, function(data, status) {
+									/*alert("Data: " + data);*/
+									$("#conversation").prepend(
+											"<div class='message'>" + data
+													+ "</div>");
+								});
+								$("#textInput").val("");
+							}
+							;
+							$("#textInput").focus();
 						});
 			});
 </script>
@@ -42,6 +46,7 @@
 <body>
 	<input id="textInput" type="text"></input>
 	<button id="send">Send</button>
+	<input id="messageCount" type="hidden" value="0"></input>
 	<div id="conversation" class="conversation"></div>
 </body>
 </html>

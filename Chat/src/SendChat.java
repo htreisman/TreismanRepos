@@ -30,10 +30,7 @@ public class SendChat extends HttpServlet {
 		response.setHeader("Cache-Control", "no-cache");
 		response.setHeader("Pragma", "no-cache");
 		PrintWriter out = response.getWriter();
-		Date currentTime = new Date();
-		String message = String.format("It is now %tr on %tD.", currentTime,
-				currentTime);
-		out.print(message);
+		out.print("OK");
 	}
 
 	/**
@@ -43,9 +40,12 @@ public class SendChat extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		Date currentTime = new Date();
+		MainData mainData = MainData.getInstance();
 		String timeStamp = String.format(" - %tr", currentTime);
 		String text = request.getParameter("text");
 		String message = text + timeStamp;
+		mainData.chatVector.add(message);
+		System.out.println(request.getParameter("messageCount"));
 		response.setHeader("Cache-Control", "no-cache");
 		response.setHeader("Pragma", "no-cache");
 		PrintWriter out = response.getWriter();
